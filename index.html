@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Hack </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        body { 
+            background: #000; 
+            color: #0f0; 
+            text-align: center; 
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0 0 L100 100 M0 100 L100 0" stroke="%2300ff00" stroke-width="0.5"/></svg>');
+        }
+        h1 {
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            font-size: 3em;
+            margin: 20px 0;
+            animation: glitch 1s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+        .box { 
+            border: 1px solid #0f0; 
+            padding: 20px; 
+            margin: 20px auto;
+            max-width: 600px;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            animation: scan 2s linear infinite;
+        }
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .name-box {
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+        .name-input, .number-input {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            font-size: 16px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .submit-button {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .submit-button:hover {
+            background: #0f0;
+            color: #000;
+            text-shadow: 0 0 5px #000;
+        }
+        .submit-button:disabled {
+            background: #111;
+            color: #0f0;
+            border-color: #0f0;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .number { 
+            font-size: 48px; 
+            margin: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+        .color { 
+            width: 100px; 
+            height: 100px; 
+            border-radius: 50%; 
+            margin: 20px auto;
+            border: 1px solid #0f0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+        .red { 
+            background: #f00; 
+            box-shadow: 0 0 20px #f00;
+        }
+        .green { 
+            background: #0f0; 
+            box-shadow: 0 0 20px #0f0;
+        }
+        .timer { 
+            font-size: 24px; 
+            margin: 20px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .luck-meter {
+            width: 100%;
+            height: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .luck-fill {
+            height: 100%;
+            background: #0f0;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+            box-shadow: 0 0 10px #0f0;
+        }
+        .luck-text {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .power-level {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .streak {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .special-effect {
+            font-size: 24px;
+            margin: 10px 0;
+            color: #0f0;
+            animation: pulse 1s infinite;
+            text-shadow: 0 0 10px #0f0;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 10px #0f0; }
+            50% { transform: scale(1.1); text-shadow: 0 0 20px #0f0; }
+            100% { transform: scale(1); text-shadow: 0 0 10px #0f0; }
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .history {
+            margin-top: 20px;
+            text-align: left;
+            border: 1px solid #0f0;
+            padding: 10px;
+            background: rgba(0,0,0,0.8);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #0f0;
+            color: #0f0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .reset-button {
+            background: #000; 
+            color: #0f0; 
+            border: 1px solid #0f0; 
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        .reset-button:hover {
+            background: #0f0;
+            color: #000;
+            text-shadow: 0 0 5px #000;
+        }
+        .error-message {
+            color: #f00;
+            margin: 10px 0;
+            display: none;
+            text-shadow: 0 0 5px #f00;
+        }
+        .hit-prediction {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #0f0;
+            animation: glow 1s infinite;
+            text-shadow: 0 0 10px #0f0;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #0f0; }
+            50% { text-shadow: 0 0 20px #0f0; }
+            100% { text-shadow: 0 0 5px #0f0; }
+        }
+        .hit-meter, .combo-meter {
+            width: 100%;
+            height: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .hit-fill, .combo-fill {
+            height: 100%;
+            background: #0f0;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+            box-shadow: 0 0 10px #0f0;
+        }
+        .lucky-number {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: numberPulse 2s infinite;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        @keyframes numberPulse {
+            0% { transform: scale(1); box-shadow: 0 0 5px #0f0; }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px #0f0; }
+            100% { transform: scale(1); box-shadow: 0 0 5px #0f0; }
+        }
+        .special-event {
+            font-size: 24px;
+            margin: 10px 0;
+            color: #0f0;
+            animation: specialGlow 1s infinite;
+            text-shadow: 0 0 10px #0f0;
+        }
+        @keyframes specialGlow {
+            0% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0; }
+            50% { text-shadow: 0 0 20px #0f0, 0 0 30px #0f0; }
+            100% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0; }
+        }
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        .lucky-charm {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #0f0;
+            border-radius: 50%;
+            animation: float 3s infinite;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        .power-up {
+            animation: powerUp 0.5s ease-out;
+        }
+        @keyframes powerUp {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .critical-hit {
+            animation: criticalHit 0.5s infinite;
+        }
+        @keyframes criticalHit {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+        .luck-boost {
+            position: absolute;
+            color: #0f0;
+            font-size: 20px;
+            animation: boostUp 1s forwards;
+            pointer-events: none;
+        }
+        @keyframes boostUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+        .quantum-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,255,0,0.1) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: quantumPulse 2s infinite;
+        }
+        @keyframes quantumPulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.5); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.1; }
+        }
+        .neural-network {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .neural-path {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            height: 1px;
+            animation: neuralFlow 2s infinite;
+        }
+        @keyframes neuralFlow {
+            0% { width: 0; opacity: 0; }
+            50% { width: 100%; opacity: 0.5; }
+            100% { width: 0; opacity: 0; }
+        }
+        .virus-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0,255,0,0.1) 0px,
+                rgba(0,255,0,0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: virusScan 1s infinite;
+        }
+        @keyframes virusScan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+        .quantum-particles {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #0f0;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hologram-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0,255,0,0.1) 1px,
+                rgba(0,255,0,0.1) 2px
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: hologramPulse 2s infinite;
+        }
+        @keyframes hologramPulse {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+        .time-warp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 10deg,
+                rgba(0,255,0,0.1) 10deg,
+                rgba(0,255,0,0.1) 20deg
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: timeWarp 2s infinite;
+        }
+        @keyframes timeWarp {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .cosmic-alignment {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0,255,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(0,255,0,0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: cosmicPulse 3s infinite;
+        }
+        @keyframes cosmicPulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.1; }
+        }
+        .time-warp-text {
+            position: absolute;
+            color: #0f0;
+            font-size: 24px;
+            text-shadow: 0 0 10px #0f0;
+            animation: warpText 1s infinite;
+        }
+        @keyframes warpText {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .cosmic-text {
+            position: absolute;
+            color: #0f0;
+            font-size: 24px;
+            text-shadow: 0 0 10px #0f0;
+            animation: cosmicText 2s infinite;
+        }
+        @keyframes cosmicText {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        .audio-player {
+            display: none;
+        }
+        .image-box {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #0f0;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-box img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-box">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=100&h=100&fit=crop" alt="Hacker Interface">
+    </div>
+    <audio id="bgMusic" class="audio-player" loop autoplay>
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_8b1a1a0f1a.mp3" type="audio/mpeg">
+    </audio>
+    <div class="matrix-rain" id="matrixRain"></div>
+    <div class="quantum-effect" id="quantumEffect"></div>
+    <div class="neural-network" id="neuralNetwork"></div>
+    <div class="virus-effect" id="virusEffect"></div>
+    <div class="hologram-effect" id="hologramEffect"></div>
+    <div class="time-warp" id="timeWarp"></div>
+    <div class="cosmic-alignment" id="cosmicAlignment"></div>
+    <h1>DANGER ZONE</h1>
+    <p>SYSTEM ACCESS REQUIRED - ENTER CREDENTIALS</p>
+
+    <div class="name-box" id="nameBox">
+        <input type="text" class="name-input" id="nameInput" placeholder="ENTER HACKER ID">
+        <input type="password" class="number-input" id="passwordInput" placeholder="ENTER ACCESS PASSWORD">
+        <input type="number" class="number-input" id="numberInput" placeholder="ENTER ACCESS CODE">
+        <div class="error-message" id="errorMessage">INVALID ACCESS CODE - MUST BE 10 DIGITS</div>
+        <div class="error-message" id="passwordError">INVALID PASSWORD</div>
+        <button class="submit-button" id="submitButton" onclick="startGame()">INITIALIZE SYSTEM</button>
+    </div>
+
+    <div class="box" id="gameBox" style="display: none;">
+        <div class="player-name" id="playerName"></div>
+        <div class="player-number" id="playerNumber"></div>
+        <div class="digit-sum" id="digitSum"></div>
+        <div class="number-analysis" id="numberAnalysis"></div>
+        <div class="hit-prediction" id="hitPrediction"></div>
+        <div class="hit-chance" id="hitChance"></div>
+        <div class="hit-meter">
+            <div class="hit-fill" id="hitFill"></div>
+        </div>
+        <div class="hit-stats">
+            <div>SYSTEM PENETRATION: <span id="totalHits">0</span></div>
+            <div>SUCCESS RATE: <span id="hitRate">0%</span></div>
+        </div>
+        <div class="combo-meter">
+            <div class="combo-fill" id="comboFill"></div>
+        </div>
+        <div class="combo-text" id="comboText">CHAIN: 0x</div>
+        <div class="special-event" id="specialEvent"></div>
+        <div class="lucky-numbers" id="luckyNumbers"></div>
+        <div class="number" id="number">0000</div>
+        <div class="color" id="color"></div>
+        <div class="timer" id="timer">30</div>
+        <div class="luck-meter">
+            <div class="luck-fill" id="luckFill"></div>
+        </div>
+        <div class="luck-text" id="luckText">SYSTEM ANALYSIS IN PROGRESS...</div>
+        <div class="power-level" id="powerLevel">SYSTEM POWER: 0</div>
+        <div class="streak" id="streak">CHAIN LENGTH: 0</div>
+        <div class="special-effect" id="specialEffect"></div>
+        <div class="stats">
+            <div>RED ALERT: <span id="redCount">0</span></div>
+            <div>GREEN ZONE: <span id="greenCount">0</span></div>
+        </div>
+        <button class="reset-button" onclick="reset()">TERMINATE SESSION</button>
+    </div>
+
+    <div class="box history" id="history"></div>
+
+    <script>
+        let count = 0;
+        let red = 0;
+        let green = 0;
+        let seconds = 30;
+        let luck = 50;
+        let powerLevel = 0;
+        let currentStreak = 0;
+        let lastColor = null;
+        let specialEffect = '';
+        let gameStarted = false;
+        let timerInterval;
+        let playerNumber = 0;
+        let totalHits = 0;
+        let hitRate = 0;
+        let lastPrediction = null;
+        let hitStreak = 0;
+        let combo = 0;
+        let comboMultiplier = 1;
+        let specialEventActive = false;
+        let luckyNumbers = [];
+        let luckyCharms = [];
+        let matrixRainActive = false;
+        let quantumParticles = [];
+        let neuralPaths = [];
+        let specialEffectsActive = false;
+        let timeWarpActive = false;
+        let cosmicAlignmentActive = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const PASSWORD_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*";
+        let currentPassword = "";
+        const CORRECT_PASSWORD = "hacker123";
+        const CORRECT_NUMBER = "8528314024";
+
+        // Validate 10-digit number input
+        document.getElementById('numberInput').addEventListener('input', function() {
+            const number = this.value;
+            const errorMessage = document.getElementById('errorMessage');
+            const submitButton = document.getElementById('submitButton');
+            
+            if (number.length !== 10 || isNaN(number)) {
+                errorMessage.style.display = 'block';
+                submitButton.disabled = true;
+            } else {
+                errorMessage.style.display = 'none';
+                submitButton.disabled = false;
+            }
+        });
+
+        function calculateDigitSum(number) {
+            return number.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+        }
+
+        function analyzeNumber(number) {
+            const digits = number.toString().split('').map(Number);
+            const sum = calculateDigitSum(number);
+            const isEven = number % 2 === 0;
+            const repeatingDigits = new Set(digits).size !== digits.length;
+            const sequential = digits.every((digit, i) => i === 0 || digit === digits[i-1] + 1);
+            
+            let analysis = [];
+            analysis.push(`Sum of digits: ${sum}`);
+            analysis.push(`Number is ${isEven ? 'even' : 'odd'}`);
+            analysis.push(`Has ${repeatingDigits ? 'repeating' : 'unique'} digits`);
+            analysis.push(`Digits are ${sequential ? 'sequential' : 'not sequential'}`);
+            
+            return analysis.join(' | ');
+        }
+
+        function generateLuckyNumbers() {
+            const numbers = [];
+            while (numbers.length < 5) {
+                const num = Math.floor(Math.random() * 100);
+                if (!numbers.includes(num)) {
+                    numbers.push(num);
+                }
+            }
+            return numbers;
+        }
+
+        function updateLuckyNumbers() {
+            luckyNumbers = generateLuckyNumbers();
+            const container = document.getElementById('luckyNumbers');
+            container.innerHTML = '';
+            luckyNumbers.forEach(num => {
+                const div = document.createElement('div');
+                div.className = 'lucky-number';
+                div.textContent = num;
+                container.appendChild(div);
+            });
+        }
+
+        function calculateHitChance() {
+            const digitSum = calculateDigitSum(playerNumber);
+            const baseChance = (digitSum % 100) / 2;
+            const streakBonus = currentStreak * 3;
+            const luckBonus = luck / 2;
+            const powerBonus = powerLevel * 4;
+            const comboBonus = combo * 6;
+            const timeBonus = (30 - seconds) * 0.5;
+            
+            return Math.min(100, baseChance + streakBonus + luckBonus + powerBonus + comboBonus + timeBonus);
+        }
+
+        function predictNextColor() {
+            const hitChance = calculateHitChance();
+            const digitSum = calculateDigitSum(playerNumber);
+            const isEven = playerNumber % 2 === 0;
+            
+            // More accurate prediction based on multiple factors
+            let prediction = '';
+            if (hitChance > 80) {
+                // High hit chance - use number properties
+                prediction = isEven ? 'GREEN' : 'RED';
+            } else if (hitChance > 60) {
+                // Medium hit chance - use streak pattern
+                prediction = lastColor === 'red' ? 'GREEN' : 'RED';
+            } else if (hitChance > 40) {
+                // Low hit chance - use digit sum
+                prediction = (digitSum % 2 === 0) ? 'GREEN' : 'RED';
+            } else {
+                // Very low hit chance - random
+                prediction = Math.random() > 0.5 ? 'RED' : 'GREEN';
+            }
+            
+            lastPrediction = prediction;
+            return prediction;
+        }
+
+        function updateCombo(isHit) {
+            if (isHit) {
+                combo++;
+                comboMultiplier = 1 + (combo * 0.1);
+            } else {
+                combo = 0;
+                comboMultiplier = 1;
+            }
+            
+            document.getElementById('comboText').textContent = `CHAIN: ${combo}x`;
+            document.getElementById('comboFill').style.width = `${Math.min(100, combo * 10)}%`;
+            
+            if (combo >= 5) {
+                showSpecialEvent(`CHAIN ${combo}x!`);
+            }
+        }
+
+        function showSpecialEvent(text) {
+            specialEventActive = true;
+            document.getElementById('specialEvent').textContent = text;
+            document.getElementById('specialEvent').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('specialEvent').style.display = 'none';
+                specialEventActive = false;
+            }, 2000);
+        }
+
+        function updateHitStats(isHit) {
+            if (isHit) {
+                totalHits++;
+                hitStreak++;
+            } else {
+                hitStreak = 0;
+            }
+            
+            hitRate = (totalHits / count) * 100;
+            document.getElementById('totalHits').textContent = totalHits;
+            document.getElementById('hitRate').textContent = `${hitRate.toFixed(1)}%`;
+        }
+
+        function generatePassword() {
+            const digitSum = calculateDigitSum(playerNumber);
+            const timeFactor = new Date().getSeconds();
+            const luckFactor = Math.floor(luck / 10);
+            
+            // Generate password based on multiple factors
+            let password = "";
+            const length = 6 + (luckFactor % 4); // Password length varies with luck
+            
+            for (let i = 0; i < length; i++) {
+                const index = (digitSum + timeFactor + luckFactor + i) % PASSWORD_CHARS.length;
+                password += PASSWORD_CHARS[index];
+            }
+            
+            currentPassword = password;
+            return password;
+        }
+
+        function startGame() {
+            const name = document.getElementById('nameInput').value.trim();
+            const number = document.getElementById('numberInput').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            if (name === '') {
+                alert('Please enter your name!');
+                return;
+            }
+            
+            if (password !== CORRECT_PASSWORD) {
+                document.getElementById('passwordError').textContent = "INVALID PASSWORD - TRY AGAIN";
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+            
+            if (number !== CORRECT_NUMBER) {
+                document.getElementById('errorMessage').textContent = "INVALID ACCESS CODE - ONLY 8528314024 IS ACCEPTED";
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('errorMessage').style.display = 'none';
+                showSpecialEffect("ACCESS CODE VERIFIED - SYSTEM INITIALIZING!");
+                activateSpecialEffects();
+            }
+            
+            playerNumber = parseInt(number);
+            const correctPassword = generatePassword();
+            
+            document.getElementById('playerName').textContent = name;
+            document.getElementById('playerNumber').textContent = `Lucky Number: ${number}`;
+            document.getElementById('digitSum').textContent = `Digit Sum: ${calculateDigitSum(playerNumber)}`;
+            document.getElementById('numberAnalysis').textContent = analyzeNumber(playerNumber);
+            
+            document.getElementById('nameBox').style.display = 'none';
+            document.getElementById('gameBox').style.display = 'block';
+            
+            gameStarted = true;
+            generate();
+            updateLuck();
+            updateLuckyNumbers();
+            
+            timerInterval = setInterval(updateTimer, 1000);
+            setInterval(updateLuck, 2000);
+            setInterval(updateLuckyNumbers, 10000);
+        }
+
+        function updateTimer() {
+            if (!gameStarted) return;
+            
+            seconds--;
+            document.getElementById('timer').textContent = seconds;
+            
+            if (seconds <= 5) {
+                // Show special countdown effect
+                document.getElementById('timer').style.color = 'red';
+                document.getElementById('timer').style.animation = 'pulse 0.5s infinite';
+                
+                if (seconds <= 0) {
+                    // Stop the game for 5 seconds
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = 'RESTARTING...';
+                    document.getElementById('color').className = 'color';
+                    
+                    // Wait 5 seconds before restarting
+                    setTimeout(() => {
+                        seconds = 30;
+                        document.getElementById('timer').textContent = seconds;
+                        document.getElementById('timer').style.color = '#ff00ff';
+                        document.getElementById('timer').style.animation = 'none';
+                        generate();
+                        timerInterval = setInterval(updateTimer, 1000);
+                    }, 5000);
+                }
+            }
+        }
+
+        function updateLuck() {
+            if (!gameStarted) return;
+            
+            // Enhanced luck calculations with new factors
+            const digitSum = calculateDigitSum(playerNumber);
+            const binarySum = playerNumber.toString(2).split('').reduce((sum, bit) => sum + parseInt(bit), 0);
+            const hexSum = playerNumber.toString(16).split('').reduce((sum, hex) => sum + parseInt(hex, 16), 0);
+            const timeFactor = new Date().getSeconds() % 60;
+            const moonPhase = (new Date().getDate() % 30) / 30;
+            const quantumState = Math.random() * 2 * Math.PI;
+            const timeWarpFactor = Math.sin(timeFactor * Math.PI / 15) * 8;
+            const cosmicFactor = Math.cos(moonPhase * Math.PI) * 10;
+            
+            // Advanced technical factors with new additions
+            const baseLuck = (digitSum % 100) / 2;
+            const binaryFactor = (binarySum % 8) * 3;
+            const hexFactor = (hexSum % 16) * 2;
+            const randomFactor = Math.random() * 25 - 10;
+            const streakBonus = currentStreak * 3;
+            const powerBonus = powerLevel * 4;
+            const numberFactor = (playerNumber % 2) === 0 ? 7 : -5;
+            const hitBonus = hitStreak * 6;
+            const comboBonus = combo * 4;
+            const timeBonus = (30 - seconds) * 0.3;
+            const quantumFactor = Math.sin(quantumState) * 10;
+            
+            // Special events with new effects
+            if (Math.random() < 0.1) {
+                createLuckyCharm();
+                showLuckBoost(5);
+                if (Math.random() < 0.3) {
+                    activateSpecialEffects();
+                }
+                if (Math.random() < 0.2) {
+                    createTimeWarpEffect();
+                }
+                if (Math.random() < 0.2) {
+                    createCosmicAlignmentEffect();
+                }
+            }
+            
+            if (luck > 80 && !matrixRainActive) {
+                matrixRainActive = true;
+                createMatrixRain();
+                activateSpecialEffects();
+                if (Math.random() < 0.5) {
+                    createTimeWarpEffect();
+                }
+                if (Math.random() < 0.5) {
+                    createCosmicAlignmentEffect();
+                }
+                setTimeout(() => {
+                    matrixRainActive = false;
+                    document.getElementById('matrixRain').innerHTML = '';
+                }, 5000);
+            }
+            
+            // Complex calculation with all factors
+            const luckChange = (
+                baseLuck + 
+                binaryFactor + 
+                hexFactor + 
+                randomFactor + 
+                streakBonus + 
+                powerBonus + 
+                numberFactor + 
+                hitBonus + 
+                comboBonus + 
+                timeBonus +
+                quantumFactor +
+                timeWarpFactor +
+                cosmicFactor
+            ) / 14;
+            
+            luck = Math.max(0, Math.min(100, luck + luckChange));
+            
+            document.getElementById('luckFill').style.width = luck + '%';
+            
+            let luckText = "QUANTUM SYSTEM ANALYSIS IN PROGRESS...";
+            if (luck > 90) {
+                luckText = "TIME WARP DETECTED - COSMIC ALIGNMENT PERFECT!";
+                showSpecialEffect("ULTRA HACK MODE ACTIVATED!");
+                document.getElementById('color').classList.add('critical-hit');
+                activateSpecialEffects();
+                createTimeWarpEffect();
+                createCosmicAlignmentEffect();
+            } else if (luck > 80) {
+                luckText = "NEURAL NETWORK COMPROMISED!";
+                showSpecialEffect("VIRUS INJECTION SUCCESSFUL!");
+                document.getElementById('color').classList.add('power-up');
+            } else if (luck > 60) {
+                luckText = "SYSTEM ACCESS: QUANTUM STATE";
+                showSpecialEffect("NEURAL PATH ESTABLISHED!");
+            } else if (luck > 40) {
+                luckText = "SYSTEM STATUS: STABLE";
+                specialEffect = '';
+            } else if (luck > 20) {
+                luckText = "SYSTEM WARNING: QUANTUM INTERFERENCE";
+                specialEffect = '';
+            } else {
+                luckText = "SYSTEM LOCKED: QUANTUM ENCRYPTION";
+                showSpecialEffect("NEURAL DEFENSE ACTIVATED!");
+            }
+            
+            document.getElementById('luckText').textContent = luckText;
+            updatePowerLevel();
+        }
+
+        function updatePowerLevel() {
+            powerLevel = Math.floor(luck / 10);
+            document.getElementById('powerLevel').textContent = `SYSTEM POWER: ${powerLevel}`;
+            if (powerLevel > 5) {
+                document.getElementById('powerLevel').classList.add('power-up');
+                setTimeout(() => {
+                    document.getElementById('powerLevel').classList.remove('power-up');
+                }, 500);
+            }
+        }
+
+        function showSpecialEffect(text) {
+            document.getElementById('specialEffect').textContent = text;
+            document.getElementById('specialEffect').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('specialEffect').style.display = 'none';
+            }, 2000);
+        }
+
+        function generate() {
+            count++;
+            document.getElementById('number').textContent = count.toString().padStart(4, '0');
+            
+            const digitSum = calculateDigitSum(playerNumber);
+            const luckFactor = luck / 100;
+            const numberFactor = (playerNumber % 2) === 0 ? 0.15 : -0.15;
+            const sumFactor = (digitSum % 10) / 20;
+            const hitChance = calculateHitChance();
+            
+            // Get prediction first
+            const prediction = predictNextColor();
+            document.getElementById('hitPrediction').textContent = `NEXT TARGET: ${prediction}`;
+            document.getElementById('hitChance').textContent = `SUCCESS PROBABILITY: ${hitChance.toFixed(1)}%`;
+            document.getElementById('hitFill').style.width = `${hitChance}%`;
+            
+            // Calculate actual color based on prediction and hit chance
+            let actualColor;
+            if (hitChance > 70) {
+                actualColor = prediction;
+            } else if (hitChance > 50) {
+                actualColor = Math.random() < 0.8 ? prediction : (prediction === 'RED' ? 'GREEN' : 'RED');
+            } else {
+                actualColor = Math.random() < 0.6 ? prediction : (prediction === 'RED' ? 'GREEN' : 'RED');
+            }
+            
+            const isRed = actualColor === 'RED';
+            const isHit = prediction === actualColor;
+            updateHitStats(isHit);
+            updateCombo(isHit);
+            
+            if (isRed) {
+                document.getElementById('color').className = 'color red';
+                red++;
+                if (lastColor === 'red') {
+                    currentStreak++;
+                } else {
+                    currentStreak = 1;
+                }
+                lastColor = 'red';
+            } else {
+                document.getElementById('color').className = 'color green';
+                green++;
+                if (lastColor === 'green') {
+                    currentStreak++;
+                } else {
+                    currentStreak = 1;
+                }
+                lastColor = 'green';
+            }
+            
+            document.getElementById('redCount').textContent = red;
+            document.getElementById('greenCount').textContent = green;
+            document.getElementById('streak').textContent = `CHAIN LENGTH: ${currentStreak}`;
+
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.textContent = `ATTEMPT ${count}: ${actualColor} (TARGET: ${prediction} ${isHit ? '✓' : '✗'})`;
+            document.getElementById('history').prepend(historyItem);
+
+            if (document.getElementById('history').children.length > 10) {
+                document.getElementById('history').removeChild(document.getElementById('history').lastChild);
+            }
+
+            updateLuck();
+        }
+
+        function reset() {
+            // Stop background music
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+            
+            count = 0;
+            red = 0;
+            green = 0;
+            luck = 50;
+            powerLevel = 0;
+            currentStreak = 0;
+            lastColor = null;
+            seconds = 30;
+            gameStarted = false;
+            playerNumber = 0;
+            totalHits = 0;
+            hitRate = 0;
+            hitStreak = 0;
+            combo = 0;
+            comboMultiplier = 1;
+            clearInterval(timerInterval);
+            
+            document.getElementById('number').textContent = '0000';
+            document.getElementById('color').className = 'color';
+            document.getElementById('redCount').textContent = '0';
+            document.getElementById('greenCount').textContent = '0';
+            document.getElementById('history').innerHTML = '';
+            document.getElementById('timer').textContent = '30';
+            document.getElementById('timer').style.color = '#ff00ff';
+            document.getElementById('timer').style.animation = 'none';
+            document.getElementById('luckFill').style.width = '50%';
+            document.getElementById('luckText').textContent = 'Calculating luck...';
+            document.getElementById('powerLevel').textContent = 'Power Level: 0';
+            document.getElementById('streak').textContent = 'Current Streak: 0';
+            document.getElementById('specialEffect').textContent = '';
+            document.getElementById('playerNumber').textContent = '';
+            document.getElementById('digitSum').textContent = '';
+            document.getElementById('numberAnalysis').textContent = '';
+            document.getElementById('hitPrediction').textContent = '';
+            document.getElementById('hitChance').textContent = '';
+            document.getElementById('hitFill').style.width = '0%';
+            document.getElementById('totalHits').textContent = '0';
+            document.getElementById('hitRate').textContent = '0%';
+            document.getElementById('comboText').textContent = 'Combo: 0x';
+            document.getElementById('comboFill').style.width = '0%';
+            document.getElementById('specialEvent').textContent = '';
+            document.getElementById('luckyNumbers').innerHTML = '';
+            
+            document.getElementById('nameBox').style.display = 'block';
+            document.getElementById('gameBox').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+            document.getElementById('numberInput').value = '';
+            document.getElementById('submitButton').disabled = true;
+        }
+
+        function createMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            const characters = "01";
+            const fontSize = 14;
+            const columns = Math.floor(window.innerWidth / fontSize);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.left = `${i * fontSize}px`;
+                column.style.top = '-100px';
+                column.style.color = '#0f0';
+                column.style.fontSize = `${fontSize}px`;
+                column.style.fontFamily = 'monospace';
+                column.style.textShadow = '0 0 5px #0f0';
+                matrixRain.appendChild(column);
+                
+                let text = '';
+                for (let j = 0; j < 50; j++) {
+                    text += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                column.textContent = text;
+                
+                animateColumn(column);
+            }
+        }
+
+        function animateColumn(column) {
+            let position = -100;
+            const speed = Math.random() * 2 + 1;
+            
+            function move() {
+                position += speed;
+                column.style.top = `${position}px`;
+                
+                if (position < window.innerHeight) {
+                    requestAnimationFrame(move);
+                } else {
+                    position = -100;
+                    move();
+                }
+            }
+            
+            move();
+        }
+
+        function createLuckyCharm() {
+            const charm = document.createElement('div');
+            charm.className = 'lucky-charm';
+            charm.style.left = `${Math.random() * window.innerWidth}px`;
+            charm.style.top = `${Math.random() * window.innerHeight}px`;
+            document.body.appendChild(charm);
+            luckyCharms.push(charm);
+            
+            setTimeout(() => {
+                charm.remove();
+                luckyCharms = luckyCharms.filter(c => c !== charm);
+            }, 3000);
+        }
+
+        function showLuckBoost(amount) {
+            const boost = document.createElement('div');
+            boost.className = 'luck-boost';
+            boost.textContent = `+${amount} LUCK`;
+            boost.style.left = `${Math.random() * window.innerWidth}px`;
+            boost.style.top = `${Math.random() * window.innerHeight}px`;
+            document.body.appendChild(boost);
+            
+            setTimeout(() => {
+                boost.remove();
+            }, 1000);
+        }
+
+        function createQuantumParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'quantum-particles';
+                particle.style.left = `${Math.random() * window.innerWidth}px`;
+                particle.style.top = `${Math.random() * window.innerHeight}px`;
+                document.body.appendChild(particle);
+                quantumParticles.push(particle);
+                
+                animateParticle(particle);
+            }
+        }
+
+        function animateParticle(particle) {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let dx = (Math.random() - 0.5) * 2;
+            let dy = (Math.random() - 0.5) * 2;
+            
+            function move() {
+                x += dx;
+                y += dy;
+                
+                if (x < 0 || x > window.innerWidth) dx *= -1;
+                if (y < 0 || y > window.innerHeight) dy *= -1;
+                
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                requestAnimationFrame(move);
+            }
+            
+            move();
+        }
+
+        function createNeuralNetwork() {
+            const network = document.getElementById('neuralNetwork');
+            network.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                const path = document.createElement('div');
+                path.className = 'neural-path';
+                path.style.top = `${Math.random() * window.innerHeight}px`;
+                path.style.left = '0';
+                network.appendChild(path);
+                neuralPaths.push(path);
+            }
+        }
+
+        function activateSpecialEffects() {
+            if (!specialEffectsActive) {
+                specialEffectsActive = true;
+                createQuantumParticles();
+                createNeuralNetwork();
+                document.getElementById('quantumEffect').style.display = 'block';
+                document.getElementById('virusEffect').style.display = 'block';
+                document.getElementById('hologramEffect').style.display = 'block';
+                
+                setTimeout(() => {
+                    specialEffectsActive = false;
+                    document.getElementById('quantumEffect').style.display = 'none';
+                    document.getElementById('virusEffect').style.display = 'none';
+                    document.getElementById('hologramEffect').style.display = 'none';
+                    quantumParticles.forEach(p => p.remove());
+                    quantumParticles = [];
+                }, 5000);
+            }
+        }
+
+        function createTimeWarpEffect() {
+            if (!timeWarpActive) {
+                timeWarpActive = true;
+                document.getElementById('timeWarp').style.display = 'block';
+                
+                // Create floating time warp text
+                for (let i = 0; i < 3; i++) {
+                    const text = document.createElement('div');
+                    text.className = 'time-warp-text';
+                    text.textContent = 'TIME WARP ACTIVATED';
+                    text.style.left = `${Math.random() * window.innerWidth}px`;
+                    text.style.top = `${Math.random() * window.innerHeight}px`;
+                    document.body.appendChild(text);
+                    
+                    setTimeout(() => {
+                        text.remove();
+                    }, 3000);
+                }
+                
+                setTimeout(() => {
+                    timeWarpActive = false;
+                    document.getElementById('timeWarp').style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function createCosmicAlignmentEffect() {
+            if (!cosmicAlignmentActive) {
+                cosmicAlignmentActive = true;
+                document.getElementById('cosmicAlignment').style.display = 'block';
+                
+                // Create floating cosmic text
+                for (let i = 0; i < 3; i++) {
+                    const text = document.createElement('div');
+                    text.className = 'cosmic-text';
+                    text.textContent = 'COSMIC ALIGNMENT DETECTED';
+                    text.style.left = `${Math.random() * window.innerWidth}px`;
+                    text.style.top = `${Math.random() * window.innerHeight}px`;
+                    document.body.appendChild(text);
+                    
+                    setTimeout(() => {
+                        text.remove();
+                    }, 3000);
+                }
+                
+                setTimeout(() => {
+                    cosmicAlignmentActive = false;
+                    document.getElementById('cosmicAlignment').style.display = 'none';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html> 
